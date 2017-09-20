@@ -19,7 +19,11 @@ for component in gcal.walk():
         summary = component.get('summary')
         desc = component.get('description')
         start = component.decoded('dtstart')
-        end = component.decoded('dtend')
+        try:
+          end = component.decoded('dtend')
+        except KeyError:
+          print("{} has no end!".format(summary))
+          continue
         duration = end - start
         hours = duration.total_seconds() / 60 / 60
         rrule = component.get('rrule')
