@@ -70,8 +70,6 @@ for component in gcal.walk():
                   hours *= wks_since / i
         else:
             per_year[start.year] += hours
-        if start.year == 2019:
-          print("{},{}".format(hours, summary.encode("ascii", "ignore")))
         total_hours += hours
         if 'nyou045' in desc:
             assisted_hours += hours
