@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import requests
 from icalendar import Calendar
 from pprint import pprint
@@ -11,26 +11,18 @@ data = requests.get('https://calendar.google.com/calendar/ical/lmbm553md5mk5fisj
 gcal = Calendar.from_ical(data)
 total_hours = 0
 assisted_hours = 0
-per_year = {
-  2017: {
-    "hours": 0,
-    "bookings": 0
-  },
-  2018: {
-    "hours": 0,
-    "bookings": 0
-  },
-  2019: {
-    "hours": 0,
-    "bookings": 0
-  }
-}
 tz = pytz.timezone('Pacific/Auckland')
 birth = datetime(2017, 2, 20, tzinfo=tz)
 now = datetime.now(tz)
 wks_since_birth = (now - birth).days / 7
 total_bookable_hours = wks_since_birth * 5 * BOOKABLE_HOURS_PER_DAY
 n_bookings = 0
+
+per_year = {}
+for year in range(birth.year, now.year + 1):
+    per_year[year] = {"hours": 0, "bookings": 0}
+print(per_year)
+
 for component in gcal.walk():
     if component.name == "VEVENT":
         n_events = 1
